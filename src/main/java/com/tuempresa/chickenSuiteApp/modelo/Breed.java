@@ -1,3 +1,5 @@
+package com.tuempresa.chickenSuiteApp.modelo;
+
 import javax.persistence.*;
 
 import com.tuempresa.chickenSuiteApp.modelo.Purpose;
