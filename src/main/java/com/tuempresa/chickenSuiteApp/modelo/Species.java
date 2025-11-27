@@ -11,6 +11,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+/**
+ * Especie animal (por ejemplo: Gallina, Pato).
+ * Representa la clasificación biológica usada en el sistema.
+ */
 @Entity
 @Getter @Setter
 public class Species {
@@ -19,12 +23,13 @@ public class Species {
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
     @Column(length = 32)
+    // Identificador único del registro
     String oid;
 
     @Column(length = 40)
     @Required
-    String name;
+    String nombre;
 
     @Column(length = 100)
-    String description;
+    String descripcion;
 }

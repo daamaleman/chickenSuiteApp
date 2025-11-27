@@ -5,51 +5,52 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="673aa2f4-78a6-4f8d-aac3-53bfb00a5051" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/tuempresa/chickenSuiteApp/enums/EventType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/tuempresa/chickenSuiteApp/enums/Purpose.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/tuempresa/chickenSuiteApp/enums/Stage.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/tuempresa/chickenSuiteApp/modelo/DailyEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/tuempresa/chickenSuiteApp/modelo/Projection.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/tuempresa/chickenSuiteApp/temp-readme.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/tuempresa/chickenSuiteApp/modelo/Breed.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tuempresa/chickenSuiteApp/modelo/Breed.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/tuempresa/chickenSuiteApp/run/chickenSuiteApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tuempresa/chickenSuiteApp/run/chickenSuiteApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/xava/dtds/validators.dtd" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/xava/dtds/validators.dtd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/index_jsp.class" beforeDir="false" afterPath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/index_jsp.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tuempresa/chickenSuiteApp/modelo/FarmBatch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tuempresa/chickenSuiteApp/modelo/FarmBatch.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tuempresa/chickenSuiteApp/modelo/Purpose.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tuempresa/chickenSuiteApp/modelo/Species.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tuempresa/chickenSuiteApp/modelo/Species.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tuempresa/chickenSuiteApp/modelo/Stage.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/index_jsp.java" beforeDir="false" afterPath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/index_jsp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/naviox/firstSteps_jsp.class" beforeDir="false" afterPath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/naviox/firstSteps_jsp.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/naviox/firstSteps_jsp.java" beforeDir="false" afterPath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/naviox/firstSteps_jsp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/naviox/index_jsp.class" beforeDir="false" afterPath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/naviox/index_jsp.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/naviox/index_jsp.java" beforeDir="false" afterPath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/naviox/index_jsp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/naviox/leftMenu_jsp.class" beforeDir="false" afterPath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/naviox/leftMenu_jsp.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/naviox/leftMenu_jsp.java" beforeDir="false" afterPath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/naviox/leftMenu_jsp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/naviox/moduleHeader_jsp.class" beforeDir="false" afterPath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/naviox/moduleHeader_jsp.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/naviox/moduleHeader_jsp.java" beforeDir="false" afterPath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/naviox/moduleHeader_jsp.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/naviox/modulesList_jsp.java" beforeDir="false" afterPath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/naviox/modulesList_jsp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/naviox/modulesMenu_jsp.class" beforeDir="false" afterPath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/naviox/modulesMenu_jsp.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/naviox/modulesMenu_jsp.java" beforeDir="false" afterPath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/naviox/modulesMenu_jsp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/naviox/selectModules_jsp.class" beforeDir="false" afterPath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/naviox/selectModules_jsp.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/naviox/selectModules_jsp.java" beforeDir="false" afterPath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/naviox/selectModules_jsp.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/naviox/signIn_jsp.java" beforeDir="false" afterPath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/naviox/signIn_jsp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/naviox/welcome_jsp.class" beforeDir="false" afterPath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/naviox/welcome_jsp.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/naviox/welcome_jsp.java" beforeDir="false" afterPath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/naviox/welcome_jsp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/xava/barButton_jsp.class" beforeDir="false" afterPath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/xava/barButton_jsp.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/xava/barButton_jsp.java" beforeDir="false" afterPath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/xava/barButton_jsp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/xava/bottomButtons_jsp.class" beforeDir="false" afterPath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/xava/bottomButtons_jsp.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/xava/bottomButtons_jsp.java" beforeDir="false" afterPath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/xava/bottomButtons_jsp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/xava/buttonBar_jsp.class" beforeDir="false" afterPath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/xava/buttonBar_jsp.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/xava/buttonBar_jsp.java" beforeDir="false" afterPath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/xava/buttonBar_jsp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/xava/core_jsp.class" beforeDir="false" afterPath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/xava/core_jsp.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/xava/core_jsp.java" beforeDir="false" afterPath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/xava/core_jsp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/xava/detail_jsp.class" beforeDir="false" afterPath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/xava/detail_jsp.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/xava/detail_jsp.java" beforeDir="false" afterPath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/xava/detail_jsp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/xava/editor_jsp.class" beforeDir="false" afterPath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/xava/editor_jsp.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/xava/editorWrapper_jsp.java" beforeDir="false" afterPath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/xava/editorWrapper_jsp.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/xava/editor_jsp.java" beforeDir="false" afterPath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/xava/editor_jsp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/xava/editors/comparatorsCombo_jsp.java" beforeDir="false" afterPath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/xava/editors/comparatorsCombo_jsp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/xava/editors/comparatorsDescriptionsList_jsp.java" beforeDir="false" afterPath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/xava/editors/comparatorsDescriptionsList_jsp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/xava/editors/comparatorsValidValuesCombo_jsp.java" beforeDir="false" afterPath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/xava/editors/comparatorsValidValuesCombo_jsp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/xava/editors/dateCalendarEditor_jsp.java" beforeDir="false" afterPath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/xava/editors/dateCalendarEditor_jsp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/xava/editors/descriptionsEditor_jsp.java" beforeDir="false" afterPath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/xava/editors/descriptionsEditor_jsp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/xava/editors/listEditor_jsp.java" beforeDir="false" afterPath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/xava/editors/listEditor_jsp.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/xava/editors/passwordEditor_jsp.java" beforeDir="false" afterPath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/xava/editors/passwordEditor_jsp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/xava/editors/textAreaEditor_jsp.java" beforeDir="false" afterPath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/xava/editors/textAreaEditor_jsp.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/xava/editors/textEditor_jsp.java" beforeDir="false" afterPath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/xava/editors/textEditor_jsp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/xava/errors_jsp.class" beforeDir="false" afterPath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/xava/errors_jsp.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/xava/editors/validValuesEditor_jsp.java" beforeDir="false" afterPath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/xava/editors/validValuesEditor_jsp.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/xava/errors_jsp.java" beforeDir="false" afterPath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/xava/errors_jsp.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/xava/execute_jsp.java" beforeDir="false" afterPath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/xava/execute_jsp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/xava/messages_jsp.class" beforeDir="false" afterPath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/xava/messages_jsp.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/xava/frameActions_jsp.java" beforeDir="false" afterPath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/xava/frameActions_jsp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/xava/listConfigurations_jsp.java" beforeDir="false" afterPath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/xava/listConfigurations_jsp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/xava/list_jsp.java" beforeDir="false" afterPath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/xava/list_jsp.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/xava/messages_jsp.java" beforeDir="false" afterPath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/xava/messages_jsp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/xava/module_jsp.class" beforeDir="false" afterPath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/xava/module_jsp.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/xava/module_jsp.java" beforeDir="false" afterPath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/xava/module_jsp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/xava/themeChooser_jsp.class" beforeDir="false" afterPath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/xava/themeChooser_jsp.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/xava/reference_jsp.java" beforeDir="false" afterPath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/xava/reference_jsp.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/xava/themeChooser_jsp.java" beforeDir="false" afterPath="$PROJECT_DIR$/temp/work/Tomcat/localhost/chickenSuiteApp/org/apache/jsp/xava/themeChooser_jsp.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -57,13 +58,24 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Enum" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 1
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 1
+}</component>
   <component name="ProjectId" id="35SG2R28gYcXe2Ld7DYGsA3OOud" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -74,8 +86,9 @@
     "Maven.chickenSuiteApp [package].executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "merge-test",
+    "git-widget-placeholder": "diego",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/Lenovo/Desktop/ClonDelProyecto/chickenSuiteApp/pom.xml",
     "node.js.detected.package.eslint": "true",
@@ -83,6 +96,7 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -102,10 +116,21 @@
       <option name="presentableId" value="Default" />
       <updated>1763095851453</updated>
       <workItem from="1763095853598" duration="690000" />
+      <workItem from="1764262374167" duration="1561000" />
+      <workItem from="1764263986366" duration="2593000" />
+      <workItem from="1764269483971" duration="4132000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="github-copilot-workspace">
+    <instructionFileLocations>
+      <option value=".github/instructions" />
+    </instructionFileLocations>
+    <promptFileLocations>
+      <option value=".github/prompts" />
+    </promptFileLocations>
   </component>
 </project>

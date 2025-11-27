@@ -2,11 +2,14 @@ package com.tuempresa.chickenSuiteApp.modelo;
 
 import javax.persistence.*;
 
-import com.tuempresa.chickenSuiteApp.modelo.Purpose;
+import com.tuempresa.chickenSuiteApp.enums.Purpose;
 import org.hibernate.annotations.GenericGenerator;
 import org.openxava.annotations.*;
 import lombok.*;
 
+/**
+ * Raza: agrupa características productivas dentro de una especie.
+ */
 @Entity @Getter @Setter
 public class Breed {
 
@@ -15,19 +18,21 @@ public class Breed {
     @GeneratedValue(generator="system-uuid")
     @GenericGenerator(name="system-uuid", strategy="uuid")
     @Column(length=32)
+    // Identificador único de la raza
     String oid;
 
     @Column(length=50)
     @Required
-    String name;
+    String nombre; // Nombre de la raza
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @DescriptionsList // se muestra como combo
-    Species species;
+    Species especie;
 
     @Enumerated(EnumType.STRING)
     @Required
-    Purpose purpose;   // MEAT, EGG, DUAL
+    Purpose proposito;   // CARNE, HUEVO, DOBLE_PROPOSITO
 
-    int growthDaysStd; // días estándar de crecimiento
+    // Días estándar estimados para crecimiento hasta sacrificio
+    int diasCrecimientoEstandar;
 }
