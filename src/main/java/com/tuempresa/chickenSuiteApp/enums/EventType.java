@@ -8,5 +8,5 @@ public enum EventType {
     ALIMENTACION, // Suministro de alimento
     VACUNACION,   // Aplicación de vacunas
     LIMPIEZA,     // Tareas de higiene
-    MORTALIDAD    // Registro de muertes
+    MORTALIDAD    // Registro de mortalidad / pérdidas
 }

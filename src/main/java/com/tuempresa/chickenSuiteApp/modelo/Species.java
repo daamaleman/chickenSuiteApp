@@ -10,6 +10,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.constraints.*;
 
 /**
  * Especie animal (por ejemplo: Gallina, Pato).
@@ -26,8 +27,9 @@ public class Species {
     // Identificador único del registro
     String oid;
 
-    @Column(length = 40)
+    @Column(length = 40, unique = true)
     @Required
+    @NotBlank(message = "El nombre de la especie es obligatorio")
     String nombre;
 
     @Column(length = 100)
