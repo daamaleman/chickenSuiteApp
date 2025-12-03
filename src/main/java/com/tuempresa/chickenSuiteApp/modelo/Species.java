@@ -3,35 +3,56 @@ package com.tuempresa.chickenSuiteApp.modelo;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
-import org.openxava.annotations.Hidden;
-import org.openxava.annotations.Required;
+import org.openxava.annotations.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.validation.constraints.*;
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 /**
- * Especie animal (por ejemplo: Gallina, Pato).
- * Representa la clasificación biológica usada en el sistema.
+ * Especie avícola (por ejemplo: gallina, pato, codorniz).
+ *
+ * Es la clasificación biológica base sobre la que se definen
+ * las razas que maneja el sistema.
  */
 @Entity
-@Getter @Setter
+@Table(name = "CS_SPECIES")
+@Getter
+@Setter
+@View(members = "nombre; descripcion")
+@Tab(
+        name = "Especies",
+        properties = "nombre, descripcion",
+        defaultOrder = "nombre asc"
+)
 public class Species {
+
+    // =========================================================
+    // Identificador
+    // =========================================================
+
     @Id
     @Hidden
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
     @Column(length = 32)
-    // Identificador único del registro
-    String oid;
+    private String oid;
 
+    // =========================================================
+    // Datos básicos
+    // =========================================================
+
+    /**
+     * Nombre de la especie (único dentro del sistema).
+     * Ejemplos: Gallina, Pato, Codorniz.
+     */
     @Column(length = 40, unique = true)
     @Required
     @NotBlank(message = "El nombre de la especie es obligatorio")
-    String nombre;
+    private String nombre;
 
+    /**
+     * Descripción corta o notas sobre la especie.
+     */
     @Column(length = 100)
-    String descripcion;
+    private String descripcion;
 }

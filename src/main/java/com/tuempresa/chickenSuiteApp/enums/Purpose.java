@@ -1,10 +1,18 @@
 package com.tuempresa.chickenSuiteApp.enums;
 
 /**
- * Propósito productivo de una raza.
+ * Propósito productivo principal de una raza.
+ *
+ * Se utiliza en Breed para indicar si la raza es de carne, huevo o doble propósito.
  */
 public enum Purpose {
-    CARNE,          // Producción de carne
-    HUEVO,          // Producción de huevo
-    DOBLE_PROPOSITO // Uso doble: carne y huevo
+
+    // Raza orientada principalmente a producción de carne.
+    CARNE,
+
+    // Raza orientada principalmente a producción de huevo.
+    HUEVO,
+
+    // Raza de doble propósito (carne y huevo).
+    DOBLE_PROPOSITO
 }

@@ -1,224 +1,315 @@
----
-
-# ? **Chicken Suite ? Sistema de Gestión Avícola**
+# ? Chicken Suite ? Sistema de Gestión Avícola
 
 ### Proyecto Final ? Programación Orientada a Objetos (Java)
 
 ---
 
-## ? **Descripción General**
+## ? Descripción general
 
-**Chicken Suite** es una aplicación modular orientada a la gestión de procesos avícolas. Permite administrar especies, razas, lotes de producción, eventos diarios y proyecciones económicas mediante interfaces generadas automáticamente con **OpenXava**, siguiendo principios sólidos de **Programación Orientada a Objetos (POO)**.
+**Chicken Suite** es una aplicación modular orientada a la **gestión de procesos avícolas**.  
+Permite administrar especies, razas, lotes de producción, eventos diarios e indicadores económicos, usando interfaces generadas automáticamente con **OpenXava**, sobre un modelo de dominio diseñado con **POO**, **JPA/Hibernate** y buenas prácticas de diseño.
 
-El sistema se basa en un modelo de dominio claro y extensible, diseñado para representar escenarios reales de producción avícola, con lógica de negocio integrada y propiedades calculadas para facilitar la toma de decisiones.
+El sistema modela un escenario de producción real, integrando:
 
----
-
-## ? **Objetivos del Sistema**
-
-* Administrar **especies** y **razas**, incluyendo características productivas.
-* Registrar y dar seguimiento a **lotes** desde su creación hasta su cierre.
-* Registrar **eventos diarios** como alimentación, vacunación, limpieza y mortalidad.
-* Generar **proyecciones económicas** basadas en costo, peso vivo estimado y precio de venta.
-* Calcular indicadores productivos claves (KPI), como:
-
-    * Mortalidad
-    * Tasa de aves vivas
-    * Ganancia diaria promedio
-    * Ingreso proyectado
-    * Margen económico
+- Entidades de dominio claras y coherentes.
+- Relaciones y multiplicidades entre especies, razas y lotes.
+- Propiedades calculadas para apoyar la toma de decisiones.
+- Lógica de negocio encapsulada en métodos de dominio.
 
 ---
 
-## ?? **Módulos del Sistema**
+## ? Objetivos del sistema
 
-### ? **1. Species (Especie)**
+- Administrar **especies** y **razas**, incluyendo sus características productivas básicas.
+- Registrar y dar seguimiento a **lotes de producción** desde su creación hasta el cierre.
+- Registrar **eventos diarios** como alimentación, vacunación, limpieza y mortalidad.
+- Generar **proyecciones económicas** a partir de:
+    - Costos esperados.
+    - Peso vivo esperado.
+    - Precio estimado por kilogramo.
+- Calcular indicadores productivos y económicos, tales como:
+    - Mortalidad (%)
+    - Tasa de aves vivas (%)
+    - Ganancia diaria promedio por ave
+    - Ingreso esperado
+    - Margen económico esperado
+    - Margen neto proyectado
 
-Gestión de las especies presentes en la unidad productiva.
+---
+
+## ? Módulos (entidades) del sistema
+
+### 1. Species (Especie)
+
+Gestiona las **especies avícolas** manejadas en la unidad productiva.
 
 **Atributos principales:**
 
-* `name`: nombre de la especie
-* `description`: detalle o comentarios
+- `nombre`: nombre de la especie (por ejemplo, *Gallina*, *Codorniz*).
+- `descripcion`: detalle breve o comentario general.
 
 **Relaciones:**
 
-* Una especie puede tener múltiples razas y múltiples lotes.
+- Una **Species** puede tener muchas **Breed** (razas).
+- Una **Species** puede estar asociada a múltiples **FarmBatch** (lotes).
 
 ---
 
-### ? **2. Breed (Raza)**
+### 2. Breed (Raza)
 
-Maneja las razas específicas dentro de cada especie.
+Maneja las **razas específicas** dentro de cada especie.
 
-**Incluye:**
+**Atributos principales:**
 
-* Propósito productivo (MEAT, EGG, DUAL).
-* Días estándar de crecimiento (`growthDaysStd`).
+- `nombre`: nombre de la raza (por ejemplo, *Isa Brown*).
+- `especie`: referencia a la entidad `Species`.
+- `proposito`: propósito productivo (`CARNE`, `HUEVO`, `DOBLE_PROPOSITO`).
+- `diasCrecimientoEstandar`: días estándar estimados para llegar al peso objetivo.
 
 **Relaciones:**
 
-* Una raza pertenece a una especie.
-* Una raza puede ser usada por varios lotes.
+- Una raza pertenece a **una sola especie**.
+- Una raza puede ser usada por **varios lotes** (`FarmBatch`).
 
 **Método clave:**
 
-* `expectedHarvestDay()`: devuelve el estándar de días hasta cosecha.
+- `getDiaCosechaEstimado()`  
+  Devuelve el número de días estándar de crecimiento, útil para planificación en proyecciones y cronogramas.
 
 ---
 
-### ? **3. FarmBatch (Lote)**
+### 3. FarmBatch (Lote)
 
-Representa un lote de aves criadas en conjunto.
+Representa un **lote de aves** manejadas como una unidad productiva.
 
 **Atributos principales:**
 
-* Cantidad inicial y actual
-* Fechas de inicio y fin planeado
-* Peso objetivo
-* Etapa actual (INCUBATION ? SOLD)
-* Notas operativas
+- `codigo`: identificador visible del lote (ej. `LOTE-ISA-001`).
+- `especie`: especie general (ej. *Gallina*).
+- `raza`: raza específica (ej. *Isa Brown*).
+- `cantidadInicial`: número de aves al inicio.
+- `cantidadVivaActual`: número de aves vivas actualmente.
+- `pesoObjetivoGramos`: peso objetivo por ave, en gramos.
+- `fechaInicio`: fecha de inicio del ciclo.
+- `fechaFinPlaneada`: fecha planeada de cierre o venta.
+- `etapa`: etapa productiva actual (`INCUBACION`, `CRIA`, `CRECIMIENTO`, `ENGORDE`, `VENDIDO`).
+- `notas`: observaciones generales.
 
 **Relaciones:**
 
-* Pertenece a una especie y a una raza.
-* Contiene múltiples eventos diarios (`DailyEvent`).
-* Puede tener una proyección económica.
+- Cada lote pertenece a **una especie** y **una raza**.
+- Un lote tiene **muchos eventos diarios** (`DailyEvent`).
+- Un lote puede estar referenciado en **proyecciones económicas** (`Projection`) y **KPI** (`BatchKPI`).
 
-**Métodos clave:**
+**Propiedades calculadas (KPI productivos):**
 
-* `advanceStage()`: avanza el lote a la siguiente fase.
-* `registerEvent(DailyEvent)`: agrega un evento al lote.
-* `registerMortality(int, String)`: descuenta aves vivas y crea un evento asociado.
+- `getNumeroPerdidas()`  
+  Aves perdidas = `cantidadInicial - cantidadVivaActual`.
 
-**Propiedades calculadas (KPI):**
+- `getTasaMortalidadPorcentaje()`  
+  Mortalidad (%) = (aves perdidas / cantidad inicial) × 100.
 
-* `getMortalityRatePct()`: mortalidad %
-* `getAliveRatePct()`: aves vivas %
+- `getTasaVivosPorcentaje()`  
+  Aves vivas (%) = (cantidad viva actual / cantidad inicial) × 100.
+
+- `getPesoVivoTotalActualKg()`  
+  Peso vivo total estimado (kg) = `cantidadVivaActual × pesoObjetivoGramos ÷ 1000`.
+
+- `getDiasTranscurridos()`  
+  Días entre `fechaInicio` y la fecha actual.
+
+- `getGananciaDiariaPromedioGr()`  
+  Ganancia diaria promedio por ave (g/día) a partir de `pesoObjetivoGramos` y `diasTranscurridos`.
+
+**Métodos de negocio (lógica de dominio):**
+
+- `advanceStage()`  
+  Avanza la etapa del lote en el orden:
+  `INCUBACION ? CRIA ? CRECIMIENTO ? ENGORDE ? VENDIDO`.
+
+- `registerEvent(DailyEvent evento)`  
+  Agrega un evento al lote, completa datos faltantes (como fecha) y, si el evento es de mortalidad, descuenta las aves perdidas de `cantidadVivaActual`.
+
+- `registerMortality(int cantidadAvesMuertas, String nota)`  
+  Crea un evento de mortalidad, ajusta `cantidadVivaActual` y añade el evento a la colección del lote.
 
 ---
 
-### ? **4. DailyEvent (Evento Diario)**
+### 4. DailyEvent (Evento diario)
 
-Registro de actividades o sucesos importantes en el lote.
+Registra **acciones o sucesos diarios** asociados a un lote.
 
-**Tipos permitidos (`EventType`):**
+**Tipos principales de evento (`EventType`):**
 
-* FEEDING
-* VACCINATION
-* CLEANING
-* MORTALITY
+- `ALIMENTACION`
+- `VACUNACION`
+- `LIMPIEZA`
+- `MORTALIDAD`
 
 **Atributos:**
 
-* Fecha del evento
-* Tipo
-* Kilogramos de alimento (`feedKg`)
-* Mortalidad (`deadCount`)
-* Costo del evento
-* Notas
+- `lote`: referencia al `FarmBatch`.
+- `fecha`: fecha del evento (por defecto, la fecha actual).
+- `tipo`: tipo de evento.
+- `costo`: costo asociado (alimento, vacuna, servicio, etc.).
+- `avesPerdidas`: número de aves muertas (solo si `tipo == MORTALIDAD`).
+- `kilogramosAlimento`: kg de alimento suministrado (solo si `tipo == ALIMENTACION`).
+- `notas`: observaciones.
 
 **Relaciones:**
 
-* Cada evento pertenece a un único lote.
+- Cada evento pertenece a **un único lote** (`FarmBatch`).
+
+**Validaciones por tipo de evento:**
+
+- Si el evento es de **mortalidad**, `avesPerdidas` debe ser > 0.
+- Si el evento es de **alimentación**, `kilogramosAlimento` debe ser > 0.
+- Si el evento es de **alimentación** o **vacunación**, `costo` debe ser ? 0.
+
+Estas reglas se implementan mediante anotaciones como `@AssertTrue` e integran la validación de negocio directamente en el modelo.
 
 ---
 
-### ? **5. Projection (Proyección Económica)**
+### 5. Projection (Proyección económica)
 
-Permite calcular la rentabilidad estimada del lote.
+Permite estimar la **rentabilidad económica** de un lote.
 
-**Valores ingresados:**
+**Valores ingresados por el usuario:**
 
-* Precio por kg (`expectedPricePerKg`)
-* Costo total estimado (`expectedCosts`)
-* Peso vivo estimado (`expectedLiveWeightKg`)
+- `lote`: referencia al lote que se está proyectando.
+- `precioEsperadoPorKg`: precio esperado por kilogramo de peso vivo.
+- `costosEsperados`: costos totales esperados para el lote.
 
 **Propiedades calculadas:**
 
-* `getExpectedIncome()`: ingreso esperado
-* `getExpectedMargin()`: margen esperado
+- `getPesoVivoTotalEsperadoKg()`  
+  Peso vivo total esperado (kg) usando:
+  `cantidadVivaActual × pesoObjetivoGramos ÷ 1000` desde el lote.
+
+- `getIngresoEsperado()`  
+  Ingreso esperado = `pesoVivoTotalEsperadoKg × precioEsperadoPorKg`.
+
+- `getMargenEsperado()`  
+  Margen esperado = `ingresoEsperado ? costosEsperados`.
 
 ---
 
-### ? **6. BatchKPI (Métricas del Lote)**
+### 6. BatchKPI (Indicadores del lote)
 
-Módulo orientado a representar indicadores productivos clave.
+Entidad enfocada en **indicadores clave de desempeño (KPI)** para cada lote.
 
-**Atributos:**
+**Atributos principales:**
 
-* Ganancia diaria promedio (`avgDailyGainGr`)
-* Conversión alimenticia (`fcr`)
-* Mortalidad (%)
-* Ingresos y costos proyectados
+- `lote`: referencia a `FarmBatch`.
+- `gananciaDiariaPromedioGramos`: ganancia diaria promedio por ave (g/día).
+- `indiceConversionAlimenticia`: FCR (Feed Conversion Ratio).
+- `tasaMortalidadPorcentaje`: mortalidad %.
+- `costoProyectado`: costo total proyectado.
+- `ingresoProyectado`: ingreso total proyectado.
 
 **Propiedad calculada:**
 
-* `getNetMargin()`: margen neto
+- `getMargenNeto()`  
+  Margen neto proyectado = `ingresoProyectado ? costoProyectado`.
 
 ---
 
-### ? **7. User (Usuario)**
+### 7. User (Usuario)
 
-Encargado de la gestión básica de usuarios del sistema y permisos.
+Administra los **usuarios internos** de Chicken Suite y sus permisos básicos.
 
 **Atributos:**
 
-* `username`
-* `passwordHash`
-* `fullName`
-* `role` (ADMIN, PRODUCER, ANALYST)
-* `active`
+- `nombreUsuario` (`username`): utilizado para iniciar sesión.
+- `passwordHash` (`password_hash`): contraseña (en entorno real debería ser un hash seguro).
+- `nombreCompleto` (`full_name`): nombre completo de la persona usuaria.
+- `rol` (`rol`): rol funcional (`ADMINISTRADOR`, `ANALISTA`, `OPERADOR`).
+- `activo` (`activo`): indica si la cuenta está activa.
 
-**Métodos:**
+**Lógica de permisos:**
 
-* `canEditCosts()`
-* `canViewReports()`
+- `puedeEditarCostos()`  
+  Devuelve `true` solo si el usuario está activo y su rol es `ADMINISTRADOR`.
+
+- `puedeVerReportes()`  
+  Devuelve `true` si está activo y su rol es `ADMINISTRADOR` o `ANALISTA`.
+
+**Normalización de datos:**
+
+Antes de guardar:
+
+- `nombreUsuario` se normaliza a minúsculas y sin espacios al inicio o final.
+- `nombreCompleto` se guarda sin espacios sobrantes.
 
 ---
 
-## ? **Diseño UML General**
+## ? Diseño UML general
 
 El diseño UML del sistema contempla:
 
-* Entidades modeladas con JPA y OpenXava.
-* Relaciones entre Species, Breed, FarmBatch, DailyEvent, Projection, BatchKPI y User.
-* Enumeraciones que definen estados, roles y categorías.
-* Multiplicidades claras que reflejan la estructura real del proceso productivo.
-* Propiedades derivadas (calculadas) implementadas directamente en getters con `@Depends`.
+- Entidades modeladas con **JPA** y **OpenXava** (`@Entity`, `@View`, `@Tab`).
+- Relaciones claras entre:
+    - `Species` ? `Breed`
+    - `Species`/`Breed` ? `FarmBatch`
+    - `FarmBatch` ? `DailyEvent`
+    - `FarmBatch` ? `Projection`
+    - `FarmBatch` ? `BatchKPI`
+- Enumeraciones (`EventType`, `Stage`, `Purpose`, `Role`) que definen:
+    - Tipos de evento.
+    - Etapas del lote.
+    - Propósitos productivos.
+    - Roles de usuario.
+- Multiplicidades que reflejan la realidad del proceso productivo:
+    - Una especie ? muchas razas.
+    - Un lote ? muchos eventos.
+    - Un lote ? varias proyecciones o registros de KPI.
 
 ---
 
-## ? **Propiedades Calculadas**
+## ? Propiedades calculadas
 
-Las propiedades calculadas permiten obtener resultados dinámicos sin almacenarlos:
+Las propiedades calculadas se implementan directamente en los getters, usando anotaciones como:
 
-* Mortalidad (%) = (inicial ? actual) / inicial × 100
-* Aves vivas (%) = actual / inicial × 100
-* Ingreso proyectado = peso estimado × precio por kg
-* Margen proyectado = ingreso ? costos
+- `@ReadOnly`
+- `@Depends("campo1, campo2, ...")`
 
-Se implementan con anotaciones:
+Ejemplos:
 
-* `@ReadOnly`
-* `@Depends("campo1, campo2")`
+- Mortalidad (%) = `(cantidadInicial - cantidadVivaActual) / cantidadInicial × 100`
+- Aves vivas (%) = `cantidadVivaActual / cantidadInicial × 100`
+- Ingreso esperado = `pesoVivoTotalEsperadoKg × precioEsperadoPorKg`
+- Margen esperado = `ingresoEsperado ? costosEsperados`
+- Margen neto = `ingresoProyectado ? costoProyectado`
 
----
-
-## ?? **Acciones y Lógica de Negocio**
-
-El modelo incorpora métodos con lógica del dominio, por ejemplo:
-
-* Avance de etapa (`advanceStage()`)
-* Registro de mortalidad (`registerMortality()`)
-* Cálculo de indicadores y proyecciones
-
-Estos métodos pueden exponerse como **acciones desde la interfaz OpenXava**, permitiendo interacción directa con la lógica del sistema.
+Estas propiedades no se almacenan en la base de datos; se calculan cada vez que se consultan, garantizando información siempre actualizada.
 
 ---
 
-## ? **Resumen**
+## ?? Acciones y lógica de negocio
 
-Chicken Suite es un sistema modular para la administración de producción avícola que combina un modelo de dominio profesional, lógica de negocio encapsulada, cálculos clave y módulos generados automáticamente con OpenXava. Su diseño limpio, extensible y basado en POO lo convierte en un prototipo sólido para el manejo real de lotes, razas, especies y proyecciones económicas en una unidad avícola moderna.
+La lógica de negocio se encapsula en métodos de dominio como:
+
+- `advanceStage()`  
+  Controla el avance ordenado de etapas del lote.
+
+- `registerEvent(DailyEvent evento)`  
+  Registra un evento y ajusta el estado interno del lote si corresponde (por ejemplo, mortalidad).
+
+- `registerMortality(int cantidadAvesMuertas, String nota)`  
+  Facilita el registro rápido de mortalidad directamente desde la interfaz o desde otros servicios.
+
+Estas operaciones se pueden exponer como **acciones en OpenXava**, permitiendo que el usuario final ejecute lógica de negocio desde la UI sin escribir código.
 
 ---
+
+## ? Resumen
+
+**Chicken Suite** es un sistema modular para la **gestión de producción avícola**, construido con:
+
+- Un modelo de dominio claro y expresivo.
+- Entidades anotadas con JPA y OpenXava.
+- Propiedades calculadas para indicadores productivos y económicos.
+- Lógica de negocio encapsulada en métodos bien definidos.
+- Soporte para usuarios y roles internos.
+
+Su diseño legible, extensible y alineado con los principios de Programación Orientada a Objetos lo convierte en una base sólida para gestionar especies, razas, lotes, eventos diarios y proyecciones económicas en una unidad avícola moderna.

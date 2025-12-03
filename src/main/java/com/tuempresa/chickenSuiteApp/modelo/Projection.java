@@ -24,6 +24,7 @@ import java.math.RoundingMode;
  * - margenEsperado           = ingresoEsperado - costosEsperados
  */
 @Entity
+@Table(name = "CS_PROJECTION")
 @Getter
 @Setter
 @View(members =
@@ -31,9 +32,10 @@ import java.math.RoundingMode;
                 "precioEsperadoPorKg, costosEsperados;" +
                 "pesoVivoTotalEsperadoKg, ingresoEsperado, margenEsperado"
 )
-@Tab(properties =
-        "lote.codigo, precioEsperadoPorKg, costosEsperados, " +
-                "pesoVivoTotalEsperadoKg, ingresoEsperado, margenEsperado"
+@Tab(
+        name = "Proyecciones",
+        properties = "lote.codigo, precioEsperadoPorKg, costosEsperados, pesoVivoTotalEsperadoKg, ingresoEsperado, margenEsperado",
+        defaultOrder = "lote.codigo asc"
 )
 public class Projection {
 
@@ -46,33 +48,45 @@ public class Projection {
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
     @Column(length = 32)
-    // Identificador único de la proyección
     private String oid;
 
     // =========================================================
     // Parámetros de la proyección
     // =========================================================
 
+    /**
+     * Lote asociado a la proyección económica.
+     */
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @Required
     @NotNull(message = "Debe seleccionar un lote para la proyección")
-    @org.openxava.annotations.DescriptionsList(
-            descriptionProperties = "codigo, especie.nombre, raza.nombre"
-    )
-    // Lote asociado a la proyección
+    @DescriptionsList(descriptionProperties = "codigo, especie.nombre, raza.nombre")
     private FarmBatch lote;
 
+    /**
+     * Precio esperado por kilogramo de peso vivo.
+     * Ingresado por la persona usuaria.
+     */
     @NotNull(message = "Debe ingresar el precio esperado por kilogramo")
     @Money
-    @DecimalMin(value = "0.0", inclusive = false,
-            message = "El precio esperado por kilogramo debe ser mayor que 0")
-    // Precio esperado por kilogramo (ingresado por el usuario)
+    @DecimalMin(
+            value = "0.0",
+            inclusive = false,
+            message = "El precio esperado por kilogramo debe ser mayor que 0"
+    )
     private BigDecimal precioEsperadoPorKg;
 
+    /**
+     * Costos totales esperados del lote.
+     * Incluye alimento, vacunas, servicios, etc.
+     */
     @NotNull(message = "Debe ingresar los costos esperados del lote")
     @Money
-    @DecimalMin(value = "0.0", inclusive = true,
-            message = "Los costos esperados no pueden ser negativos")
-    // Costos totales esperados del lote (ingresado por el usuario)
+    @DecimalMin(
+            value = "0.0",
+            inclusive = true,
+            message = "Los costos esperados no pueden ser negativos"
+    )
     private BigDecimal costosEsperados;
 
     // =========================================================
@@ -102,8 +116,7 @@ public class Projection {
         }
 
         BigDecimal avesVivas = BigDecimal.valueOf(cantidadAvesVivas);
-        BigDecimal pesoObjetivoGramos =
-                BigDecimal.valueOf(pesoObjetivoPorAveGramos);
+        BigDecimal pesoObjetivoGramos = BigDecimal.valueOf(pesoObjetivoPorAveGramos);
 
         BigDecimal pesoTotalGramos = avesVivas.multiply(pesoObjetivoGramos);
 

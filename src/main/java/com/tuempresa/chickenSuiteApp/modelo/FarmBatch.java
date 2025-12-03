@@ -21,11 +21,12 @@ import java.util.Collection;
  * Lote de producción: conjunto de aves gestionadas como una unidad.
  *
  * Reglas importantes:
- * - La cantidad de aves vivas solo debe modificarse mediante los métodos
- *   de dominio (advanceStage, registerEvent, registerMortality).
- * - Los campos calculados se exponen como propiedades @ReadOnly para la UI.
+ * - La cantidad de aves vivas solo debe modificarse mediante métodos
+ *   de dominio (avanzarEtapa, registrarEvento, registrarMortalidad).
+ * - Las propiedades calculadas se exponen como @ReadOnly para la interfaz.
  */
 @Entity
+@Table(name = "CS_FARM_BATCH")
 @Getter
 @Setter
 @View(members =
@@ -36,9 +37,10 @@ import java.util.Collection;
                 "notas;" +
                 "eventos"
 )
-@Tab(properties =
-        "codigo, especie.nombre, raza.nombre, " +
-                "cantidadVivaActual, numeroPerdidas, tasaMortalidadPorcentaje, pesoVivoTotalActualKg"
+@Tab(
+        name = "Lotes",
+        properties = "codigo, especie.nombre, raza.nombre, cantidadVivaActual, numeroPerdidas, tasaMortalidadPorcentaje, pesoVivoTotalActualKg",
+        defaultOrder = "codigo asc"
 )
 public class FarmBatch {
 
@@ -51,64 +53,83 @@ public class FarmBatch {
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
     @Column(length = 32)
-    // Identificador único interno (UUID)
     private String oid;
 
     // =========================================================
     // Datos básicos del lote
     // =========================================================
 
+    /**
+     * Código visible del lote, por ejemplo: LOTE-ISA-001.
+     */
     @Column(length = 20, unique = true)
     @Required
     @NotBlank(message = "El código del lote es obligatorio")
-    // Código visible para el usuario (ej. LOTE-ISA-001)
     private String codigo;
 
+    /**
+     * Especie general (por ejemplo: pollo, codorniz).
+     */
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @DescriptionsList
-    // Especie general (Pollo, Codorniz, etc.)
+    @DescriptionsList(descriptionProperties = "nombre")
     private Species especie;
 
+    /**
+     * Raza específica dentro de la especie (por ejemplo: Isa Brown, Ross 308).
+     */
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @DescriptionsList
-    // Raza específica dentro de la especie (Isa Brown, Ross 308, etc.)
+    @DescriptionsList(descriptionProperties = "nombre")
     private Breed raza;
 
-    // =========================================================
-    // Valores productivos
-    // =========================================================
-
+    /**
+     * Número de aves al iniciar el lote.
+     */
     @Min(value = 1, message = "La cantidad inicial debe ser al menos 1")
-    // Número de aves al iniciar el lote
     private int cantidadInicial;
 
+    /**
+     * Número actual de aves vivas.
+     */
     @Min(value = 0, message = "La cantidad de aves vivas no puede ser negativa")
-    // Número actual de aves vivas
     private int cantidadVivaActual;
 
+    /**
+     * Peso objetivo por ave en gramos (por ejemplo, 1800 g para pollos de engorde).
+     */
     @Min(value = 1, message = "El peso objetivo por ave debe ser mayor que 0")
-    // Peso objetivo por ave en gramos (ej. 1800 gr para pollos de engorde)
     private int pesoObjetivoGramos;
 
-    // Fechas del ciclo del lote
+    /**
+     * Fecha de inicio del ciclo del lote.
+     */
     private LocalDate fechaInicio;
+
+    /**
+     * Fecha de fin planeada del lote (cosecha, venta, etc.).
+     */
     private LocalDate fechaFinPlaneada;
 
+    /**
+     * Etapa productiva actual: INCUBACION, CRIA, CRECIMIENTO, ENGORDE, VENDIDO.
+     */
     @Enumerated(EnumType.STRING)
-    // Etapa productiva actual: INCUBACION, CRIA, CRECIMIENTO, ENGORDE, VENDIDO
     private Stage etapa;
 
+    /**
+     * Notas de manejo o comentarios del productor.
+     */
     @TextArea
-    // Notas de manejo, comentarios del productor
     private String notas;
 
     // =========================================================
     // Eventos diarios asociados al lote
     // =========================================================
 
+    /**
+     * Registro de alimentación, vacunación, limpieza, mortalidad, etc.
+     */
     @OneToMany(mappedBy = "lote")
     @ListProperties("fecha, tipo, kilogramosAlimento, avesPerdidas, costo")
-    // Registro de alimentación, vacunación, limpieza, mortalidad, etc.
     private Collection<DailyEvent> eventos;
 
     // =========================================================
@@ -210,7 +231,7 @@ public class FarmBatch {
      * Si la etapa es nula, se inicializa en INCUBACION.
      * Si ya está en VENDIDO, no cambia.
      */
-    public void advanceStage() {
+    public void avanzarEtapa() {
         if (etapa == null) {
             etapa = Stage.INCUBACION;
             return;
@@ -242,7 +263,7 @@ public class FarmBatch {
      *   de la cantidad de aves vivas.
      * - Si la fecha del evento viene nula, se completa con la fecha actual.
      */
-    public void registerEvent(DailyEvent evento) {
+    public void registrarEvento(DailyEvent evento) {
         if (evento == null) {
             return;
         }
@@ -262,10 +283,10 @@ public class FarmBatch {
 
     /**
      * Crea y registra un evento de mortalidad.
-     * Este método es una forma simplificada de registrar pérdida de aves
+     * Es una forma directa de registrar pérdida de aves
      * desde la interfaz o desde otras capas de la aplicación.
      */
-    public DailyEvent registerMortality(int cantidadAvesMuertas, String nota) {
+    public DailyEvent registrarMortalidad(int cantidadAvesMuertas, String nota) {
         if (cantidadAvesMuertas <= 0) {
             return null;
         }
@@ -276,20 +297,9 @@ public class FarmBatch {
         evento.setNotas(nota);
         evento.setFecha(LocalDate.now());
 
-        // Se delega al método general para mantener una sola lógica
-        registerEvent(evento);
+        registrarEvento(evento);
 
         return evento;
-    }
-
-    // Alias en inglés para uso en otras partes del modelo, si es necesario
-
-    public BigDecimal getMortalityRatePct() {
-        return getTasaMortalidadPorcentaje();
-    }
-
-    public BigDecimal getAliveRatePct() {
-        return getTasaVivosPorcentaje();
     }
 
     // =========================================================
@@ -312,26 +322,27 @@ public class FarmBatch {
 
     /**
      * Aplica el efecto de un evento de mortalidad sobre la cantidad de aves vivas.
-     * Nunca permite que la cantidad de aves vivas sea negativa. Si el número
-     * de aves perdidas es mayor que las aves vivas actuales, se ajusta.
+     * Nunca permite que la cantidad de aves vivas sea negativa.
+     * Si el número de aves perdidas es mayor que las aves vivas actuales, se ajusta.
      */
     private void aplicarMortalidadDesdeEvento(DailyEvent evento) {
-        int avesPerdidas = evento.getAvesPerdidas();
+        int avesPerdidasEvento = evento.getAvesPerdidas();
 
-        if (avesPerdidas <= 0 || cantidadVivaActual <= 0) {
+        if (avesPerdidasEvento <= 0 || cantidadVivaActual <= 0) {
             return;
         }
 
-        if (avesPerdidas > cantidadVivaActual) {
-            avesPerdidas = cantidadVivaActual;
-            evento.setAvesPerdidas(avesPerdidas);
+        if (avesPerdidasEvento > cantidadVivaActual) {
+            avesPerdidasEvento = cantidadVivaActual;
+            evento.setAvesPerdidas(avesPerdidasEvento);
         }
 
-        cantidadVivaActual = cantidadVivaActual - avesPerdidas;
+        cantidadVivaActual = cantidadVivaActual - avesPerdidasEvento;
     }
 
     /**
-     * Asegura que la colección de eventos esté inicializada antes de agregar.
+     * Asegura que la colección de eventos esté inicializada antes de agregar
+     * y añade el evento al lote.
      */
     private void agregarEventoALote(DailyEvent evento) {
         if (eventos == null) {

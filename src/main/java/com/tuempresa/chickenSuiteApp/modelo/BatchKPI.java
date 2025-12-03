@@ -14,7 +14,7 @@ import java.math.RoundingMode;
 /**
  * Indicadores clave de desempeño (KPI) asociados a un lote específico.
  *
- * Los valores pueden venir de análisis externos o de registros históricos.
+ * Los valores pueden venir de análisis externos, proyecciones o registros históricos.
  * Esta entidad permite guardar y visualizar:
  * - gananciaDiariaPromedioGramos
  * - indiceConversionAlimenticia (FCR)
@@ -24,16 +24,19 @@ import java.math.RoundingMode;
  * - margenNeto (calculado)
  */
 @Entity
+@Table(name = "CS_BATCH_KPI")
 @Getter
 @Setter
 @View(members =
         "lote;" +
                 "gananciaDiariaPromedioGramos, indiceConversionAlimenticia, tasaMortalidadPorcentaje;" +
-                "costoProyectado, ingresoProyectado, margenNeto"
+                "costoProyectado, ingresoProyectado;" +
+                "margenNeto"
 )
-@Tab(properties =
-        "lote.codigo, gananciaDiariaPromedioGramos, indiceConversionAlimenticia, " +
-                "tasaMortalidadPorcentaje, costoProyectado, ingresoProyectado, margenNeto"
+@Tab(
+        name = "Indicadores de lote",
+        properties = "lote.codigo, gananciaDiariaPromedioGramos, indiceConversionAlimenticia, tasaMortalidadPorcentaje, costoProyectado, ingresoProyectado, margenNeto",
+        defaultOrder = "lote.codigo asc"
 )
 public class BatchKPI {
 
@@ -46,17 +49,19 @@ public class BatchKPI {
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
     @Column(length = 32)
-    // Identificador único del registro de KPI
     private String oid;
 
     // =========================================================
     // Relación con el lote
     // =========================================================
 
+    /**
+     * Lote al que pertenecen estos indicadores.
+     */
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @Required
     @NotNull(message = "Debe seleccionar el lote al que corresponden los indicadores")
     @DescriptionsList(descriptionProperties = "codigo, especie.nombre, raza.nombre")
-    // Lote al que pertenecen estos indicadores
     private FarmBatch lote;
 
     // =========================================================
@@ -65,7 +70,7 @@ public class BatchKPI {
 
     /**
      * Ganancia diaria promedio por ave, en gramos.
-     * Por ejemplo: 60.00 gramos/día.
+     * Ejemplo: 60.00 gramos/día.
      */
     @Money
     private BigDecimal gananciaDiariaPromedioGramos;
@@ -89,16 +94,26 @@ public class BatchKPI {
     // Proyección económica
     // =========================================================
 
+    /**
+     * Costo total proyectado para el lote.
+     */
     @Money
-    @DecimalMin(value = "0.0", inclusive = true,
-            message = "El costo proyectado no puede ser negativo")
-    // Costo total proyectado para el lote
+    @DecimalMin(
+            value = "0.0",
+            inclusive = true,
+            message = "El costo proyectado no puede ser negativo"
+    )
     private BigDecimal costoProyectado;
 
+    /**
+     * Ingreso total proyectado para el lote.
+     */
     @Money
-    @DecimalMin(value = "0.0", inclusive = true,
-            message = "El ingreso proyectado no puede ser negativo")
-    // Ingreso total proyectado para el lote
+    @DecimalMin(
+            value = "0.0",
+            inclusive = true,
+            message = "El ingreso proyectado no puede ser negativo"
+    )
     private BigDecimal ingresoProyectado;
 
     // =========================================================
@@ -127,6 +142,8 @@ public class BatchKPI {
                 ? costoProyectado
                 : BigDecimal.ZERO;
 
-        return ingreso.subtract(costo).setScale(2, RoundingMode.HALF_UP);
+        return ingreso
+                .subtract(costo)
+                .setScale(2, RoundingMode.HALF_UP);
     }
 }

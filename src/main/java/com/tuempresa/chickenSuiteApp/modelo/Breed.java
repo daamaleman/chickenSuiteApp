@@ -1,49 +1,89 @@
 package com.tuempresa.chickenSuiteApp.modelo;
 
-import javax.persistence.*;
-
 import com.tuempresa.chickenSuiteApp.enums.Purpose;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 import org.openxava.annotations.*;
-import lombok.*;
-import javax.validation.constraints.*;
+
+import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 
 /**
- * Raza: agrupa características productivas dentro de una especie.
+ * Raza dentro de una especie avícola.
+ *
+ * Define el propósito productivo (carne, huevo o doble propósito)
+ * y los días estándar de crecimiento hasta la cosecha.
  */
-@Entity @Getter @Setter
+@Entity
+@Table(name = "CS_BREED")
+@Getter
+@Setter
+@View(members =
+        "nombre, especie; " +
+                "proposito; " +
+                "diasCrecimientoEstandar"
+)
+@Tab(
+        name = "Razas",
+        properties = "nombre, especie.nombre, proposito, diasCrecimientoEstandar",
+        defaultOrder = "nombre asc"
+)
 public class Breed {
+
+    // =========================================================
+    // Identificador
+    // =========================================================
 
     @Id
     @Hidden
-    @GeneratedValue(generator="system-uuid")
-    @GenericGenerator(name="system-uuid", strategy="uuid")
-    @Column(length=32)
-    // Identificador único de la raza
-    String oid;
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
+    @Column(length = 32)
+    private String oid;
 
-    @Column(length=50, unique=true)
-    @Required
-    @NotBlank(message = "El nombre de la raza es obligatorio")
-    String nombre; // Nombre de la raza
-
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @DescriptionsList // se muestra como combo
-    Species especie;
-
-    @Enumerated(EnumType.STRING)
-    @Required
-    Purpose proposito;   // CARNE, HUEVO, DOBLE_PROPOSITO
-
-    // Días estándar estimados para crecimiento hasta sacrificio
-    @Min(value = 1, message = "Los días estándar de crecimiento deben ser al menos 1")
-    int diasCrecimientoEstandar;
+    // =========================================================
+    // Datos básicos
+    // =========================================================
 
     /**
-     * Devuelve el número de días estándar estimado hasta la cosecha/sacrificio.
-     * Útil para proyecciones y planificación desde la interfaz.
+     * Nombre de la raza (único dentro del sistema).
      */
-    public int expectedHarvestDay() {
+    @Column(length = 50, unique = true)
+    @Required
+    @NotBlank(message = "El nombre de la raza es obligatorio")
+    private String nombre;
+
+    /**
+     * Especie a la que pertenece la raza (por ejemplo: pollo, codorniz).
+     */
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @DescriptionsList(descriptionProperties = "nombre")
+    private Species especie;
+
+    /**
+     * Propósito productivo principal de la raza.
+     */
+    @Enumerated(EnumType.STRING)
+    @Required
+    private Purpose proposito;   // CARNE, HUEVO, DOBLE_PROPOSITO
+
+    /**
+     * Días estándar estimados de crecimiento hasta la cosecha.
+     */
+    @Min(value = 1, message = "Los días estándar de crecimiento deben ser al menos 1")
+    private int diasCrecimientoEstandar;
+
+    // =========================================================
+    // Lógica de dominio
+    // =========================================================
+
+    /**
+     * Devuelve los días estándar estimados hasta la cosecha.
+     * Se usa en proyecciones y planificación del lote.
+     */
+    public int obtenerDiasHastaCosechaEstandar() {
         return diasCrecimientoEstandar;
     }
 }

@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 /**
- * Evento diario que registra acciones o sucesos asociados a un lote.
+ * Evento diario asociado a un lote de producción.
  *
  * Ejemplos de uso:
  * - Alimentación (ALIMENTACION)
@@ -22,20 +22,22 @@ import java.time.LocalDate;
  * - Mortalidad (MORTALIDAD)
  *
  * La lógica que modifica el estado del lote (por ejemplo, descontar aves vivas)
- * se realiza desde la entidad FarmBatch mediante métodos de dominio como
- * registerEvent y registerMortality.
+ * se realiza desde la entidad FarmBatch mediante métodos de dominio.
  */
 @Entity
+@Table(name = "CS_DAILY_EVENT")
 @Getter
 @Setter
 @View(members =
         "lote;" +
                 "fecha, tipo;" +
-                "avesPerdidas, kilogramosAlimento, costo;" +
+                "kilogramosAlimento, avesPerdidas, costo;" +
                 "notas"
 )
-@Tab(properties =
-        "fecha, tipo, lote.codigo, avesPerdidas, kilogramosAlimento, costo"
+@Tab(
+        name = "Eventos diarios",
+        properties = "lote.codigo, fecha, tipo, kilogramosAlimento, avesPerdidas, costo",
+        defaultOrder = "fecha desc"
 )
 public class DailyEvent {
 
@@ -48,41 +50,55 @@ public class DailyEvent {
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
     @Column(length = 32)
-    // Identificador único del evento
     private String oid;
 
     // =========================================================
     // Relación con el lote
     // =========================================================
 
+    /**
+     * Lote al que pertenece este evento.
+     */
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @DescriptionsList(descriptionProperties = "codigo, especie.nombre, raza.nombre")
-    // Lote al que pertenece este evento
     private FarmBatch lote;
 
     // =========================================================
     // Datos principales del evento
     // =========================================================
 
+    /**
+     * Fecha del evento.
+     * Por defecto se utiliza la fecha actual al crear el registro.
+     */
     @Required
     @DefaultValueCalculator(CurrentLocalDateCalculator.class)
-    // Fecha del evento. Por defecto se toma la fecha actual.
     private LocalDate fecha;
 
+    /**
+     * Tipo de evento (alimentación, vacunación, limpieza, mortalidad, etc.).
+     */
     @Enumerated(EnumType.STRING)
     @Required
-    // Tipo de evento: ALIMENTACION, VACUNACION, LIMPIEZA, MORTALIDAD, etc.
     private EventType tipo;
 
+    /**
+     * Costo asociado al evento (alimento, vacuna, servicio, etc.).
+     */
     @Money
-    // Costo asociado al evento (alimento, vacuna, servicio, etc.)
     private BigDecimal costo;
 
-    // Solo si tipo == MORTALIDAD: número de aves perdidas en este evento
+    /**
+     * Número de aves perdidas en este evento.
+     * Solo aplica cuando el tipo es MORTALIDAD.
+     */
     @Min(value = 0, message = "Las aves perdidas deben ser mayores o iguales a 0")
     private int avesPerdidas;
 
-    // Solo si tipo == ALIMENTACION: kilogramos de alimento suministrados
+    /**
+     * Kilogramos de alimento suministrados.
+     * Solo aplica cuando el tipo es ALIMENTACION.
+     */
     @DecimalMin(
             value = "0.0",
             inclusive = false,
@@ -90,8 +106,10 @@ public class DailyEvent {
     )
     private BigDecimal kilogramosAlimento;
 
+    /**
+     * Notas u observaciones adicionales del evento.
+     */
     @TextArea
-    // Notas u observaciones del evento
     private String notas;
 
     // =========================================================
@@ -102,7 +120,7 @@ public class DailyEvent {
      * Si el evento es de mortalidad, debe indicar cuántas aves murieron.
      */
     @AssertTrue(message = "Si el evento es de mortalidad, debe indicar cuántas aves murieron")
-    public boolean isValidAvesPerdidas() {
+    public boolean esValidoAvesPerdidas() {
         if (tipo != EventType.MORTALIDAD) {
             return true;
         }
@@ -113,12 +131,12 @@ public class DailyEvent {
      * Si el evento es de alimentación, debe indicar los kilogramos de alimento.
      */
     @AssertTrue(message = "Si el evento es de alimentación, debe ingresar los kilogramos de alimento suministrados")
-    public boolean isValidKilogramosAlimento() {
+    public boolean esValidoKilogramosAlimento() {
         if (tipo != EventType.ALIMENTACION) {
             return true;
         }
-        return kilogramosAlimento != null
-                && kilogramosAlimento.compareTo(BigDecimal.ZERO) > 0;
+        return kilogramosAlimento != null &&
+                kilogramosAlimento.compareTo(BigDecimal.ZERO) > 0;
     }
 
     /**
@@ -126,7 +144,7 @@ public class DailyEvent {
      * Para otros tipos de evento no se aplica esta restricción.
      */
     @AssertTrue(message = "Si el evento es de alimentación o vacunación, el costo debe ser mayor o igual que cero")
-    public boolean isValidCosto() {
+    public boolean esValidoCosto() {
         if (tipo == null) {
             return true;
         }
